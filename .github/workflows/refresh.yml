@@ -1,0 +1,29 @@
+name: refresh-dashboard
+on:
+  schedule:
+    - cron: '0 0,12 * * *'   # 00:00 & 12:00 UTC = every 12 hours, in the cloud
+  workflow_dispatch:          # lets us (or you) trigger it manually
+permissions:
+  contents: write
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fetch IG stats
+        env:
+          SCRAPE_CREATORS_KEY: ${{ secrets.SCRAPE_CREATORS_KEY }}
+        run: python3 fetch.py
+      - name: Commit snapshot
+        run: |
+          git config user.name "silligirl-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data.js data.json history.json
+          git diff --staged --quiet || git commit -m "snapshot $(date -u +%FT%TZ)"
+          git push
