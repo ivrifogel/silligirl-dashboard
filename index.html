@@ -46,13 +46,26 @@
        padding:14px 16px;font-size:13px;margin-top:14px}
   .note{margin-top:28px;color:var(--muted);font-size:12.5px;line-height:1.6;border-top:1px solid var(--line);padding-top:16px}
   .note code{background:#f1eae3;padding:1px 6px;border-radius:5px;font-size:11.5px}
+  .hdr-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .runbtn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);
+    font:600 13px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    padding:9px 14px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;
+    transition:background .12s,border-color .12s,opacity .12s}
+  .runbtn:hover{background:var(--bg);border-color:#dcd2c8}
+  .runbtn:disabled{cursor:default;opacity:.75}
+  .runbtn .sp{width:12px;height:12px;border:2px solid #d8ccc0;border-top-color:var(--tahlia);
+    border-radius:50%;display:inline-block;animation:spin .7s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <h1>silli<b>girl</b> · accounts</h1>
-    <div class="updated" id="updated">—</div>
+    <div class="hdr-right">
+      <button id="runbtn" class="runbtn">↻ Run update</button>
+      <div class="updated" id="updated">—</div>
+    </div>
   </header>
   <div class="totals" id="totals"></div>
   <div class="grid" id="grid"></div>
@@ -139,7 +152,53 @@ if(!window.DATA || !DATA.accounts){
   }).join("");
 }
 document.getElementById("note").innerHTML =
-  `Auto-refreshes every 12h via launchd (<code>fetch.py</code>). Pulls from ScrapeCreators first, falls back to Instagram's public endpoint. Δ = change since the previous snapshot. Open this file in any browser; no server needed.`;
+  `Auto-refreshes every 12h in the cloud (GitHub Actions). Hit <b>Run update</b> to refresh right now &mdash; it queues a fresh fetch and reloads the page in ~1&ndash;2 min. Pulls from ScrapeCreators, falls back to Instagram's public endpoint. &Delta; = change since the previous snapshot.`;
+</script>
+<script>
+(function(){
+  var TRIGGER = "https://dashboard-trigger.vercel.app/api/run";
+  var KEY = "aad5176ff0843ed8f0b6";
+  var btn = document.getElementById("runbtn");
+  if(!btn) return;
+  var busy = false;
+  function set(html, disabled){ btn.innerHTML = html; btn.disabled = !!disabled; }
+  function spin(label){ return '<span class="sp"></span>' + label; }
+  function fail(msg){ set("⚠ " + msg + " — retry", false); busy = false; }
+  async function getStatus(){
+    try{ var r = await fetch(TRIGGER, {cache:"no-store"}); return (await r.json()).run; }
+    catch(e){ return null; }
+  }
+  async function run(){
+    if(busy) return;
+    busy = true;
+    set(spin("Queuing…"), true);
+    var clickTs = Date.now();
+    try{
+      var r = await fetch(TRIGGER + "?key=" + KEY, {method:"POST"});
+      var j = await r.json();
+      if(!j.ok){ fail(j.error || "failed"); return; }
+    }catch(e){ fail("network"); return; }
+    set(spin("Refreshing…"), true);
+    var tries = 0;
+    var iv = setInterval(async function(){
+      tries++;
+      var run = await getStatus();
+      if(run){
+        var done = run.status === "completed" &&
+                   (new Date(run.created_at).getTime() >= clickTs - 30000);
+        if(run.status === "queued" || run.status === "in_progress") set(spin("Refreshing…"), true);
+        if(done){
+          clearInterval(iv);
+          set(spin("Updated, loading…"), true);
+          setTimeout(function(){ location.reload(); }, 35000);
+          return;
+        }
+      }
+      if(tries >= 30){ clearInterval(iv); location.reload(); }
+    }, 10000);
+  }
+  btn.addEventListener("click", run);
+})();
 </script>
 </body>
 </html>
