@@ -19,6 +19,8 @@ jobs:
       - name: Fetch IG stats
         env:
           SCRAPE_CREATORS_KEY: ${{ secrets.SCRAPE_CREATORS_KEY }}
+          SHOPIFY_STORE: ${{ secrets.SHOPIFY_STORE }}
+          SHOPIFY_ADMIN_TOKEN: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
         run: python3 fetch.py
       - name: Commit snapshot
         run: |

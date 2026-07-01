@@ -118,6 +118,37 @@ def fetch_one(handle, key):
     return None, " | ".join(errs)
 
 
+def via_shopify():
+    """Pull orders + revenue from Shopify Admin API. No-op unless creds are set.
+    Needs env: SHOPIFY_STORE (e.g. siligirl.myshopify.com) + SHOPIFY_ADMIN_TOKEN (shpat_...)."""
+    store = os.environ.get("SHOPIFY_STORE", "").strip().replace("https://", "").rstrip("/")
+    token = os.environ.get("SHOPIFY_ADMIN_TOKEN", "").strip()
+    if not store or not token:
+        return None
+    since = (datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(days=8)).isoformat()
+    url = (f"https://{store}/admin/api/2024-07/orders.json?status=any&limit=250"
+           f"&created_at_min={since}&fields=created_at,total_price,financial_status")
+    st, body = _get(url, {"X-Shopify-Access-Token": token, "Accept": "application/json"})
+    orders = json.loads(body).get("orders", [])
+    today = datetime.datetime.now(datetime.timezone.utc).date()
+    wk = today - datetime.timedelta(days=7)
+    o_today = o_wk = 0
+    r_today = r_wk = 0.0
+    for o in orders:
+        try:
+            d = datetime.datetime.fromisoformat(o["created_at"].replace("Z", "+00:00")).date()
+            amt = float(o.get("total_price") or 0)
+        except (ValueError, KeyError):
+            continue
+        if d == today:
+            o_today += 1; r_today += amt
+        if d >= wk:
+            o_wk += 1; r_wk += amt
+    return {"orders_today": o_today, "revenue_today": round(r_today, 2),
+            "orders_7d": o_wk, "revenue_7d": round(r_wk, 2),
+            "aov_7d": round(r_wk / o_wk, 2) if o_wk else None}
+
+
 def main():
     key = load_key()
     now = datetime.datetime.now().astimezone().isoformat(timespec="minutes")
@@ -140,7 +171,16 @@ def main():
         history = history[-200:]
         hp.write_text(json.dumps(history, indent=1))
 
-    payload = {"updated": now, "accounts": accounts, "history": history}
+    shop = None
+    try:
+        shop = via_shopify()
+        if shop:
+            print(f"OK   shopify: {shop['orders_today']} orders today, "
+                  f"{shop['orders_7d']} / ${shop['revenue_7d']} last 7d")
+    except Exception as e:
+        print("FAIL shopify:", str(e)[:120])
+
+    payload = {"updated": now, "accounts": accounts, "history": history, "shop": shop}
     (HERE / "data.json").write_text(json.dumps(payload, indent=1))
     (HERE / "data.js").write_text("window.DATA = " + json.dumps(payload) + ";")
     print("wrote data.js / data.json /", len(history), "history points")

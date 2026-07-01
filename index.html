@@ -112,11 +112,17 @@ if(!window.DATA || !DATA.accounts){
   const totalFollowers = sum(okFollowers);
   const totalViews = sum(Object.values(accs).flatMap(a=>(a.recent||[]).map(p=>p.views||0)));
   const totalComments = sum(Object.values(accs).flatMap(a=>(a.recent||[]).map(p=>p.comments||0)));
+  const shop = DATA.shop;
+  const shopCells = shop
+    ? `<div>Orders today<span>${n(shop.orders_today)}</span></div>
+       <div>Orders (7d)<span>${n(shop.orders_7d)}</span></div>
+       <div>Revenue (7d)<span>$${n(shop.revenue_7d)}</span></div>`
+    : `<div>Sales<span style="font-size:15px;color:var(--muted)">connect Shopify</span></div>`;
   document.getElementById("totals").innerHTML =
     `<div>Total followers<span>${n(totalFollowers)}</span></div>
      <div>Views (recent posts)<span>${n(totalViews)}</span></div>
      <div>Comments (recent)<span>${n(totalComments)}</span></div>
-     <div>Accounts<span>3</span></div>`;
+     ${shopCells}`;
 
   grid.innerHTML = Object.keys(META).map(handle=>{
     const a = accs[handle] || {};
