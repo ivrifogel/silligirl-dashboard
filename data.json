@@ -1,5 +1,5 @@
 {
- "updated": "2026-06-30T13:58+00:00",
+ "updated": "2026-07-01T02:38+00:00",
  "accounts": {
   "brookes.siligirl": {
    "followers": 1,
@@ -8,14 +8,14 @@
    "recent": [
     {
      "shortcode": "DaNZK9GDsVY",
-     "views": 1,
+     "views": 4,
      "likes": 0,
      "comments": 0,
      "is_video": true
     },
     {
      "shortcode": "DaK0ZxWERdN",
-     "views": 1,
+     "views": 2,
      "likes": 0,
      "comments": 0,
      "is_video": true
@@ -64,14 +64,14 @@
    "error": null
   },
   "islasclips": {
-   "followers": 0,
+   "followers": 1,
    "following": 0,
    "posts": 3,
    "recent": [
     {
      "shortcode": "DaNgJbVHEHJ",
-     "views": null,
-     "likes": 0,
+     "views": 14,
+     "likes": 2,
      "comments": 0,
      "is_video": true
     },
@@ -245,6 +245,22 @@
     "followers": 0,
     "posts": 3
    }
+  },
+  {
+   "ts": "2026-07-01T02:38+00:00",
+   "brookes.siligirl": {
+    "followers": 1,
+    "posts": 3
+   },
+   "tahliasclips": {
+    "followers": 0,
+    "posts": 3
+   },
+   "islasclips": {
+    "followers": 1,
+    "posts": 3
+   }
   }
- ]
+ ],
+ "shop": null
 }
