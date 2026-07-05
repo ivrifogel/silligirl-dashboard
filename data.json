@@ -1,5 +1,5 @@
 {
- "updated": "2026-07-04T13:02+00:00",
+ "updated": "2026-07-05T02:09+00:00",
  "accounts": {
   "brookes.siligirl": {
    "followers": 1,
@@ -8,7 +8,7 @@
    "recent": [
     {
      "shortcode": "DaXsW7dj0-i",
-     "views": null,
+     "views": 1,
      "likes": 0,
      "comments": 0,
      "is_video": true
@@ -67,21 +67,21 @@
    "recent": [
     {
      "shortcode": "DaXXuNOkW47",
-     "views": 1,
-     "likes": 0,
+     "views": 68,
+     "likes": 1,
      "comments": 0,
      "is_video": true
     },
     {
      "shortcode": "DaUzCrKD2Ah",
-     "views": 1,
+     "views": 2,
      "likes": 0,
      "comments": 0,
      "is_video": true
     },
     {
      "shortcode": "DaSOIewDVuA",
-     "views": 17,
+     "views": 18,
      "likes": 0,
      "comments": 0,
      "is_video": true
@@ -126,7 +126,7 @@
    "recent": [
     {
      "shortcode": "DaXzPiAAO-p",
-     "views": null,
+     "views": 11,
      "likes": 0,
      "comments": 0,
      "is_video": true
@@ -437,6 +437,21 @@
   },
   {
    "ts": "2026-07-04T13:02+00:00",
+   "brookes.siligirl": {
+    "followers": 1,
+    "posts": 7
+   },
+   "tahliasclips": {
+    "followers": 0,
+    "posts": 7
+   },
+   "islasclips": {
+    "followers": 1,
+    "posts": 7
+   }
+  },
+  {
+   "ts": "2026-07-05T02:09+00:00",
    "brookes.siligirl": {
     "followers": 1,
     "posts": 7
