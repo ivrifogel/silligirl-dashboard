@@ -1,123 +1,19 @@
 {
- "updated": "2026-07-14T01:41+00:00",
+ "updated": "2026-07-14T13:10+00:00",
  "accounts": {
   "brookes.siligirl": {
-   "followers": 1,
-   "following": 0,
-   "posts": 7,
-   "recent": [
-    {
-     "shortcode": "DaXsW7dj0-i",
-     "views": 2,
-     "likes": 0,
-     "comments": 0,
-     "is_video": true
-    },
-    {
-     "shortcode": "DaVHmNAFCib",
-     "views": 43,
-     "likes": 1,
-     "comments": 0,
-     "is_video": true
-    },
-    {
-     "shortcode": "DaSiwZfCU9p",
-     "views": 2,
-     "likes": 0,
-     "comments": 0,
-     "is_video": true
-    },
-    {
-     "shortcode": "DaP99kklV65",
-     "views": 30,
-     "likes": 0,
-     "comments": 0,
-     "is_video": true
-    },
-    {
-     "shortcode": "DaNZK9GDsVY",
-     "views": 7,
-     "likes": 0,
-     "comments": 0,
-     "is_video": true
-    },
-    {
-     "shortcode": "DaK0ZxWERdN",
-     "views": 2,
-     "likes": 0,
-     "comments": 0,
-     "is_video": true
-    },
-    {
-     "shortcode": "DaIPqDelH1l",
-     "views": 31,
-     "likes": 1,
-     "comments": 0,
-     "is_video": true
-    }
-   ],
-   "bio": "",
-   "source": "scrapecreators",
-   "error": null
+   "error": "HTTP Error 500: Internal Server Error | HTTP Error 429: Too Many Requests",
+   "followers": null,
+   "following": null,
+   "posts": null,
+   "recent": []
   },
   "tahliasclips": {
-   "followers": 0,
-   "following": 0,
-   "posts": 7,
-   "recent": [
-    {
-     "shortcode": "DaXXuNOkW47",
-     "views": 68,
-     "likes": 1,
-     "comments": 0,
-     "is_video": true
-    },
-    {
-     "shortcode": "DaUzCrKD2Ah",
-     "views": 2,
-     "likes": 0,
-     "comments": 0,
-     "is_video": true
-    },
-    {
-     "shortcode": "DaSOIewDVuA",
-     "views": 18,
-     "likes": 0,
-     "comments": 0,
-     "is_video": true
-    },
-    {
-     "shortcode": "DaPpVsaD0C5",
-     "views": 7,
-     "likes": 0,
-     "comments": 0,
-     "is_video": true
-    },
-    {
-     "shortcode": "DaNEnEIin2u",
-     "views": 68,
-     "likes": 0,
-     "comments": 0,
-     "is_video": true
-    },
-    {
-     "shortcode": "DaKfyhPCL3E",
-     "views": 73,
-     "likes": 0,
-     "comments": 0,
-     "is_video": true
-    },
-    {
-     "shortcode": "DaH7AZkj5Ed",
-     "views": 68,
-     "likes": 0,
-     "comments": 0,
-     "is_video": true
-    }
-   ],
-   "bio": "",
-   "source": "scrapecreators",
-   "error": null
+   "error": "HTTP Error 500: Internal Server Error | HTTP Error 429: Too Many Requests",
+   "followers": null,
+   "following": null,
+   "posts": null,
+   "recent": []
   },
   "islasclips": {
    "followers": 1,
@@ -730,6 +626,13 @@
     "followers": 0,
     "posts": 7
    },
+   "islasclips": {
+    "followers": 1,
+    "posts": 7
+   }
+  },
+  {
+   "ts": "2026-07-14T13:10+00:00",
    "islasclips": {
     "followers": 1,
     "posts": 7
